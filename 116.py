@@ -15,3 +15,30 @@ class Solution(object):
         :rtype: Node
         """
 
+        if root is None:
+            return
+
+        leftone = root.left
+        rightone = root.right
+        if leftone is None and rightone is None:
+            root.next = None
+            return root
+
+        root.next = None
+        # leftone.next = rightone
+        # rightone.next = None
+
+        self.connect(leftone)
+        self.connect(rightone)
+
+        p = leftone
+        q = rightone
+        while p is not None and q is not None:
+            p.next = q
+            p = p.right
+            q = q.left
+
+
+
+
+        return root
