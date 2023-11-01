@@ -1,3 +1,6 @@
+import copy
+
+
 class TreeNode(object):
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -68,5 +71,25 @@ class Traversel(object):
                 l.insert(0,out.left)
             if out.right is not None:
                 l.insert(0,out.right)
+
+    #深度遍历节点 输出root到叶子的每条路径
+    def depthOrderPath(self,root):
+        if root is None:
+            return []
+        else:
+            return self.path(root,[])
+
+    def path(self,root,path):
+        paths = []
+        if root is not None:
+            path.append(root.val)
+            if root.left is None and root.right is None:
+                paths.append(copy.deepcopy(path))
+            if root.left is not None:
+                paths.extend(self.path(root.left,copy.deepcopy(path)))
+            if root.right is not None:
+                paths.extend(self.path(root.right,copy.deepcopy(path)))
+
+        return paths
 
 
