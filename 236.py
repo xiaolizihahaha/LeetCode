@@ -152,5 +152,5 @@ class Solution(object):
             return left
         if left and right:
             return root
-        return 
+        return
 
