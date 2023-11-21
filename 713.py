@@ -1,3 +1,51 @@
+# class Solution(object):
+#     def numSubarrayProductLessThanK(self, nums, k):
+#         """
+#         :type nums: List[int]
+#         :type k: int
+#         :rtype: int
+#         """
+#
+#         if k == 0:
+#             return 0
+#
+#         left = 0
+#         right = 0
+#         cheng = nums[0]
+#         res = 0
+#
+#         while left < len(nums):
+#
+#             while cheng < k:
+#                 if right + 1 < len(nums):
+#                     right += 1
+#                     cheng = cheng * nums[right]
+#                 else:
+#                     res += right - left + 1
+#                     cheng = cheng / nums[left]
+#                     left += 1
+#                     if left >= len(nums):
+#                         break
+#
+#             if cheng >= k:
+#                 if right - left >= 0:
+#                     res += right - left
+#                 else:
+#                     res += 0
+#                 if right < left:
+#                     right = left
+#                     cheng = nums[left]
+#                 else:
+#                     cheng = cheng / nums[left]
+#                     left += 1
+#
+#         print(res)
+#         if res < 0:
+#             return 0
+#         else:
+#             return res
+
+
 class Solution(object):
     def numSubarrayProductLessThanK(self, nums, k):
         """
@@ -5,46 +53,20 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-
-        if k == 0:
-            return 0
-
         left = 0
         right = 0
-        cheng = nums[0]
+        cheng = 1
         res = 0
 
-        while left < len(nums):
+        while right < len(nums):
+            cheng *= nums[right]
+            right += 1
+            while left < right and cheng >= k:
+                cheng = cheng / nums[left]
+                left += 1
+            res += right - left + 1
 
-            while cheng < k:
-                if right + 1 < len(nums):
-                    right += 1
-                    cheng = cheng * nums[right]
-                else:
-                    res += right - left + 1
-                    cheng = cheng / nums[left]
-                    left += 1
-                    if left >= len(nums):
-                        break
-
-            if cheng >= k:
-                if right - left >= 0:
-                    res += right - left
-                else:
-                    res += 0
-                if right < left:
-                    right = left
-                    cheng = nums[left]
-                else:
-                    cheng = cheng / nums[left]
-                    left += 1
-
-        print(res)
-        if res < 0:
-            return 0
-        else:
-            return res
-
+        return res
 
 
 
