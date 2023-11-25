@@ -1,3 +1,4 @@
+from sortedcontainers import SortedList
 class Solution(object):
     def longestSubarray(self, nums, limit):
         """
@@ -5,29 +6,36 @@ class Solution(object):
         :type limit: int
         :rtype: int
         """
+
         l = 0
         r = 0
         length = 0
         maxlength = 0
-        qianmin = nums[0]
-        qianmax = nums[0]
+
+        s = SortedList()
+        s.add(nums[l])
 
         while r < len(nums):
-            qianmax = max(qianmax,nums[r])
-            qianmin = min(qianmin,nums[r])
             r += 1
 
 
             if r == len(nums):
                 break
             if l != r:
-                snums = sorted(nums[l:r])
-                while l < r and max(abs(max(nums[l:r]) - nums[r]),abs(min(nums[l:r]) - nums[r])) > limit:
+                # snums = sorted(nums[l:r])
+
+                while l < r and max(abs(s[0] - nums[r]),abs(s[-1] - nums[r])) > limit:
                     length = r - l
                     maxlength = max(maxlength,length)
+                    s.remove(nums[l])
+
                     l += 1
+            s.add(nums[r])
+
         k = len(nums) - 1
-        if max(abs(max(nums[l:k+1]) - nums[k]), abs(min(nums[l:k+1]) - nums[k])) <= limit:
+        s.add(nums[k])
+
+        if max(abs(s[0] - nums[k]), abs(s[-1] - nums[k])) <= limit:
             length = k - l + 1
         maxlength = max(maxlength, length)
 
